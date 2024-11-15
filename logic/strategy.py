@@ -11,4 +11,5 @@ def decide(gameState: GameState) -> List[PlayerAction]:
     # Upgrade if possible
     own_bases, enemy_bases = get_own_and_enemy_bases(gameState.bases, player)
     actions = upgrade_low_bases(own_bases)
+
     return [actions]

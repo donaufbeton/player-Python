@@ -1,6 +1,7 @@
 import math
 
 from models.base import Base, Position
+from models.game_config import PathConfig
 from itertools import product
 
 #noch abändern
@@ -17,8 +18,8 @@ def prioritize_opponents(own_bases : list[Base], enemy_bases : list[Base]):
         src_dst_map[src] = distances
     return src_dst_map
 
-def calculate_casualties(distance):
-    pass
+def calculate_casualties(path_config : PathConfig, distance : float):
+    return max(((distance - path_config.grace_period) * path_config.death_rate), 0)
 
 # Würde ich ändern und hier direct 
 def get_own_and_enemy_bases(bases : list[Base]):
@@ -33,30 +34,12 @@ def get_own_and_enemy_bases(bases : list[Base]):
 
     
     return own_bases, enemy_bases
-
-
-def nearest_enemies(own_bases : list[Base], enemy_bases : list[Base]):
-    #own_base, enemy_base, distance
-    distance_map={}
-    
-
-    for own_base in own_bases:
-        distance_map[own_base] = {}
-        for enemy_base in enemy_bases:
-            distance_map[own_base][enemy_base] = get_distance(own_base.position, enemy_base.position)
-           
-    
-    #nach distance_map sortieren
-
-    return distance_map      
-
-
     
 
 
 if __name__ == "__main__":
 
     own_bases, enemy_bases=get_own_and_enemy_bases(Base)
-    distance_map = nearest_enemies(own_bases, enemy_bases)
+
 
     # print(get_distance(0,0,1,0,0,2))

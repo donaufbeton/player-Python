@@ -12,15 +12,10 @@ from models.board_action import BoardAction
 from models.progress import Progress
 from attack import get_own_and_enemy_bases
 from upgrade import check_upgrade, upgrade_base
-
-
 from attack import *
-
-
 
 app = Flask(__name__)
 CORS(app)
-
 
 @app.route("/", methods=["GET"])
 def identify():
