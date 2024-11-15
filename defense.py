@@ -35,7 +35,7 @@ def classify_actions(actions : list[BoardAction], all_bases : list[Base]):
                 action,
                 base_dict[action.dest],
                 base_dict[action.dest].player,
-                action.progress.distance - action.progress.traveled
+                action.progress.distance - action.progress.traveled,
             )
         )
     return action_classification
@@ -43,6 +43,12 @@ def classify_actions(actions : list[BoardAction], all_bases : list[Base]):
 # calculate strength on target when successfull
 def get_attacks_on_allies(own_player_id, allied_bases : list[Base], classified_actions : dict[Base, ActionWrapper]):
     for base in allied_bases:
-        target_actions : list[ActionWrapper] = [wrapper for wrapper in classified_actions[base] if wrapper.action_type == EActionType.ATTACK]
-        first_impact = min(map(lambda x: x.remaining_incerception_time, target_actions))
-        
+        critical_actions : list[ActionWrapper] = [wrapper for wrapper in classified_actions[base] if wrapper.action_type == EActionType.ATTACK]
+        impact_timeline = map(lambda x: (x.remaining_incerception_time, x.action_instance.amount), critical_actions)
+        # estmate casualties per instance & calculate survivors
+
+def get_joink_targets():
+    pass
+
+def conquer():
+    pass

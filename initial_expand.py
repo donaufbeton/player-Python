@@ -8,15 +8,26 @@ def get_nearest_ten_percent(bases, src_dst_map):
     
 
 def filter_empty_bases(cut_src_dst_map):
+    empty_bases = []
     
+    for base in cut_src_dst_map:
+        if (base.population == 0):
+            empty_bases.append(base)
+
+    return empty_bases
+
+
+
+
+
+
+def get_best_base_to_conquer(all_bases, enemy_bases):
+
+    for enemy_base in enemy_bases:
+        if (base.population== 0):
+            for base         
+
     pass
-
-
-
-
-
-
-def get_best_base_to_conquer(own_bases, enemy_bases):
     
 
 
