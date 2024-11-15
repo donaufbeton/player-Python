@@ -11,6 +11,11 @@ from models.position import Position
 from models.board_action import BoardAction
 from models.progress import Progress
 
+
+from attack import *
+
+
+
 app = Flask(__name__)
 CORS(app)
 
@@ -74,5 +79,7 @@ def index():
     ]
 
     game_state = GameState(actions, bases, game_config, game)
+
+ 
 
     return jsonify([action.serialize() for action in decide(game_state)])
