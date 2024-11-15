@@ -51,7 +51,7 @@ class TestNearestEnemy(unittest.TestCase):
             Game(0, 0, 2, 2, 0),
         )
 
-        distance = nearest_enemies(own_base, test_base)
+        
         self.assertEqual(1, distance[own_base][test_base])
 
 

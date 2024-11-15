@@ -40,6 +40,6 @@ def get_own_and_enemy_bases(bases : list[Base]):
 if __name__ == "__main__":
 
     own_bases, enemy_bases=get_own_and_enemy_bases(Base)
-
+    print(prioritize_opponents(own_bases, enemy_bases))
 
     # print(get_distance(0,0,1,0,0,2))

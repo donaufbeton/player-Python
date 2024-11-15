@@ -12,10 +12,11 @@ class EActionType(Enum):
     ATTACK = 1
 
 class ActionWrapper():
-    def __init__(self, action_type : EActionType, action_instance : BoardAction, targeted_base : Base, remaining_incerception_time : float):
+    def __init__(self, action_type : EActionType, action_instance : BoardAction, targeted_base : Base, targeted_player : str, remaining_incerception_time : float):
         self.action_type = action_type
         self.action_instance = action_instance
         self.targeted_base = targeted_base
+        self.targeted_player = targeted_player
         self.remaining_incerception_time = remaining_incerception_time
 
 def calculate_travel_loss(distance, path_config : PathConfig):
@@ -25,30 +26,23 @@ def classify_actions(actions : list[BoardAction], all_bases : list[Base]):
     base_dict = {base.uid : base for base in all_bases}
     action_classification = {}
     for action in actions:
-        if base_dict[action.src].player == base_dict[action.dest]:
-            action_classification[action.uuid] = {
-                'type' : EActionType.UPGRADE,
-                ''
-                'targeted_base' : base_dict[action.dest],
-                'targeted_player' : base_dict[action.dest].player,
-                'remaining_interception_time' : action.progress.distance - action.progress.traveled
-            }
-        else:
-            action_classification[action.uuid] = ActionWrapper(
-                EActionType.ATTACK,
+        target_base = base_dict[action.dest]
+        if target_base not in action_classification.keys():
+            action_classification[target_base] = []
+        action_classification[target_base].append(
+            ActionWrapper(
+                EActionType.UPGRADE if base_dict[action.src].player == base_dict[action.dest] else EActionType.ATTACK,
+                action,
                 base_dict[action.dest],
-                base_dict[action.dest].player
+                base_dict[action.dest].player,
+                action.progress.distance - action.progress.traveled
             )
-            
-            {
-                'type' : EActionType.ATTACK,
-                'targeted_base' : base_dict[action.dest],
-                'targeted_player' : base_dict[action.dest].player,
-                'remaining_interception_time' : action.progress.distance - action.progress.traveled
-            }
+        )
     return action_classification
 
 # calculate strength on target when successfull
-def calculate_strength_on_finish(action_classification):
-
-    pass
+def get_attacks_on_allies(own_player_id, allied_bases : list[Base], classified_actions : dict[Base, ActionWrapper]):
+    for base in allied_bases:
+        target_actions : list[ActionWrapper] = [wrapper for wrapper in classified_actions[base] if wrapper.action_type == EActionType.ATTACK]
+        first_impact = min(map(lambda x: x.remaining_incerception_time, target_actions))
+        
