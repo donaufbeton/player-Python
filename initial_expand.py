@@ -24,10 +24,11 @@ def filter_empty_bases(cut_src_dst_map):
 def get_best_base_to_conquer(all_bases, enemy_bases):
 
     for enemy_base in enemy_bases:
-        if (base.population== 0):
-            for base         
+        if (enemy_base.population== 0):
+            for base in all_bases:
 
-    pass
+
+                pass
     
 
 
