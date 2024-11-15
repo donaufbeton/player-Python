@@ -39,8 +39,10 @@ class TestNearestEnemy(unittest.TestCase):
 
     def test_decide(self):
 
-        own_base = Base(1, "peach", 3, 100, 1, 200, Position(1, 1, 1))
-        test_base = Base(0, "test base", 0, 100, 1, 200, Position(0, 0, 0))
+        own_base = [Base(1, "peach", 3, 100, 1, 200, Position(1, 1, 1))]
+        test_base = [Base(0, "test base", 0, 100, 1, 200, Position(0, 0, 0))]
+
+
 
         test_game_state = GameState(
             [BoardAction(uuid.uuid4(), 0, 1, 2, 100, Progress(10, 4))],
@@ -49,8 +51,8 @@ class TestNearestEnemy(unittest.TestCase):
             Game(0, 0, 2, 2, 0),
         )
 
-
-        print(nearest_enemies(own_base, test_base))
+        distance = nearest_enemies(own_base, test_base)
+        self.assertEqual(1, distance[own_base][test_base])
 
 
 
