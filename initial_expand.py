@@ -26,6 +26,7 @@ def get_best_base_to_conquer(all_bases, enemy_bases):
     for enemy_base in enemy_bases:
         if (enemy_base.population== 0):
             for base in all_bases:
+                
 
 
                 pass

@@ -2,7 +2,7 @@ from main import BoardAction, Base, PathConfig
 from enum import Enum
 
 class EDeviceState(Enum):
-    LURE = 0
+    IDLE = 0
     ATTACK = 1
     UPGRADE = 2
     RETREAT = 3
@@ -44,8 +44,12 @@ def classify_actions(actions : list[BoardAction], all_bases : list[Base]):
 def get_attacks_on_allies(own_player_id, allied_bases : list[Base], classified_actions : dict[Base, ActionWrapper]):
     for base in allied_bases:
         critical_actions : list[ActionWrapper] = [wrapper for wrapper in classified_actions[base] if wrapper.action_type == EActionType.ATTACK]
-        impact_timeline = map(lambda x: (x.remaining_incerception_time, x.action_instance.amount), critical_actions)
-        # estmate casualties per instance & calculate survivors
+        if len(critical_actions) == 0:
+            pass
+        else:
+            impact_timeline = list(map(lambda x: (x.remaining_incerception_time, x.action_instance.amount), critical_actions))
+            impact_timeline = sorted(impact_timeline, lambda x: x[0])
+            # estmate casualties per instance & calculate survivors
 
 def get_joink_targets():
     pass
